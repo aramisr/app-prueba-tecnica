@@ -37,7 +37,7 @@ function createTask(value){
 //Inyectar codigo HTML en un contenedor
 function renderTasks(){
 
-	//Nos permite recorrer un arreglo, y operar con cada iteracion
+	//Nos permite recorrer los elementos de la tarea, y operar con cada iteracion
 	const html = tasks.map(task => {
 		return `
 			<div class="task">
@@ -66,7 +66,32 @@ function renderTasks(){
 	});
 }
 
-function startButtonHandler(){
+function startButtonHandler(id){
 	
-	
+	time = 25 * 60;
+	current = id;
+	//Iterar cada uno de los elementos, y cuando encuentre el id que se esta solicitando como parametro, que almacene el index
+	const taskIndex = tasks.findIndex(task => task.id == id);
+	const taskName = document.querySelector("#time #taskName");
+	taskName.textContent = tasks[taskIndex].title;
+	//Darle formato al tiempo
+	timer = setInterval(() => {
+		timeHandler(id);
+	}, 1000);
+}
+
+function timeHandler(id){
+	time--;
+	//Renderizar el tiempo
+	renderTime();
+}
+
+function renderTime(){
+	const timeDiv = document.querySelector("#time #value");
+	const minutes = parseInt(time / 60);
+	const seconds = parseInt(time % 60);
+
+	timeDiv.textContent = `${minutes < 10 ? "0":""}${minutes}:${
+		seconds < 10 ? "0":""
+	}${seconds}`;//Template literal de string
 }
